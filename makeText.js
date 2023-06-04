@@ -5,12 +5,33 @@ let fs = require ('fs')
 const stuff = require('./markov.js')
 const axios = require ('axios')
 
-try {
-    const data = fs.readFileSync(argv[2], {encoding: 'utf8', flag: 'r'})
-    markov = new stuff.MarkovMachine(data)
-    console.log(markov.makeText())
-}
-catch(err){
-    console.log("Sorry Something went wrong reading that file", err)
 
+
+function makeTextPath(path){
+    try {
+        const data = fs.readFileSync(path, {encoding: 'utf8', flag: 'r'})
+        markov = new stuff.MarkovMachine(data)
+        console.log(markov.makeText())
+    }
+    catch(err){
+        console.log("Sorry Something went wrong reading that file", err)
+    }
+}
+
+async function makeTextURL(url){
+    try {
+        const data = await axios.get(url)
+        markov = new stuff.MarkovMachine(data.data)
+        console.log(markov.makeText())
+    }
+    catch(err){
+        console.log("Sorry Something went wrong reading that URL", err)
+    }
+}
+
+if (argv[2]== "url"){
+    makeTextURL(argv[3])
+}
+else{
+    makeTextPath(argv[3])
 }
