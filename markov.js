@@ -1,5 +1,5 @@
 /** Textual markov chain generator */
-
+const fs = require('fs')
 
 class MarkovMachine {
 
@@ -63,3 +63,7 @@ class MarkovMachine {
     }
 }
 
+
+module.exports = {
+     MarkovMachine
+}
