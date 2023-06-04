@@ -46,10 +46,20 @@ class MarkovMachine {
   /** return random text from chains */
 
   makeText(numWords = 100) {
+    const chain = this.makeChains()
+    const chainkeys = Object.keys(chain)
+    const chainLen = chainkeys.length
+    let word = chainkeys[Math.floor(Math.random()*chainLen)]
+    let nextWord = chain[word][Math.floor(Math.random()*chain[word].length)]
+    let text = `${word}`
     
-  }
+    while(nextWord != null){
+        text = text + " " + nextWord
+        word = nextWord
+        nextWord = chain[word][Math.floor(Math.random()*chain[word].length)]  
+    }
+    return text
+    
+    }
 }
 
-test = new MarkovMachine("This is nice said the mouse to the mouse house in which she lived as long as in her life it was a good mouse life thats what the mouse said she did")
-
-console.log(test.makeChains())
